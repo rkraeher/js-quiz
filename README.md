@@ -25,3 +25,28 @@ A timed quiz testing a new student's knowledge of JavaScript fundamentals
 // At the end of the game, a page is displayed with the final score and an input for user initials
 // The user intials and score are saved in local storage and displayed as the last saved input (View High Scores)
 // There is a button to restart the quiz.
+
+https://www.softwaretestinghelp.com/css-interview-questions/
+https://www.javatpoint.com/html-interview-questions
+https://www.guru99.com/javascript-interview-questions-answers.html
+
+
+// Backup Code
+
+function quiz (){      //TODO Fill in the function parameters with a placeholder, so that where "voidElement" is now can be interchangeable. 
+    questionText.textContent = voidElement.question;
+    lead.textContent = "";
+    lead2.textContent = "";
+    startButton.parentNode.removeChild(startButton);
+    correctButton();
+    
+};
+
+// Correct and Wrong Answer Button Generators
+
+function correctButton () {    
+    var answerBtn = document.createElement("button");
+    answerBtn.innerHTML = voidElement.correct;
+    answerBtn.setAttribute("class", "btn btn-info btn-lg m-2");
+    answers.appendChild(answerBtn);
+};
