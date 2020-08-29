@@ -50,3 +50,71 @@ function correctButton () {
     answerBtn.setAttribute("class", "btn btn-info btn-lg m-2");
     answers.appendChild(answerBtn);
 };
+
+function buttonGenerator (questionObject){          // Work in Progress. For testing purposes this function is called in the quizProgress function. 
+    questionText.textContent = questionObject.question;
+    lead.textContent = "";
+    lead2.textContent = "";
+    
+    //TODO: Remove/replace the previous buttons. 
+    // #previousButton.parentNode.removeChild(#previousButtons);
+    
+    // correctButton(questionObject);
+    // wrongButtons(questionObject);
+};
+
+/////
+Dynamically generate paragraphs: 
+      // var para = document.createElement("p");                       
+        // var t = document.createTextNode("Correct!");     
+        // var hr = document.createElement("hr");
+        // para.style.color = "grey";
+        // answers.appendChild(hr); 
+        // para.appendChild(t);                                         
+        // answers.appendChild(para); 
+
+         // var para = document.createElement("p");                       
+        // var t = document.createTextNode("Wrong!");     
+        // var hr = document.createElement("hr");
+        // para.style.color = "red";
+        // answers.appendChild(hr); 
+        // para.appendChild(t);                                         
+        // answers.appendChild(para);
+
+
+
+
+// Tutoring
+
+// Solution
+
+// arranged the objectarray as an array, isntead of as variables. 
+
+// They used css display: none (hide) for questions area. 
+var currentQuestionIndex = 0;
+
+get Question function
+var currentQuestion = questions[currentQuestionIndex];
+
+//This is all the dynamically generating the questions and buttons
+var titleEl = document.get element by id("questionObject property title")
+
+when you use () that calls it immediately or when the page runs; when you write it without the parenthese it only runs with the click event
+
+//
+
+On question click function
+if (this.value !== questions[currentquestionindex].answer);
+
+move to next question; 
+currentQuestionIndex++;
+
+check if (currentQuestionIndex === questions.length) (questions here is the name of the questionObject array)
+    quizEnd (game over)
+    else, getNewQuestion
+
+
+
+    LOOP
+    for(let i = 0; i < allObjects.length; i++){ 
+};
