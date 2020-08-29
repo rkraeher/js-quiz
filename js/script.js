@@ -70,36 +70,21 @@ var currentQuestion = allObjects[currentQuestionIndex];
 
 var getQuestion = function () {
     currentQuestionIndex++;
-
-    if (currentQuestionIndex === allObjects.length){
-        gameOver;
-    } else {
-        getQuestion;
-        }
+    currentQuestion = allObjects[currentQuestionIndex];
+    if (currentQuestionIndex === allObjects.length) {
+        gameOver();
+    }
 };
-                                         //!! DEBUGGING: Index is changing but not current question text. 
-console.log(currentQuestion);
-console.log(currentQuestionIndex);
-console.log(allObjects[2]); 
-
-getQuestion();                     
-console.log(currentQuestion);
-console.log(currentQuestionIndex);
-
-getQuestion();
-console.log(currentQuestion);
-console.log(currentQuestionIndex);
-
-
+                                        
 //  Start Quiz                                                    
-startButton.addEventListener("click", function(questionObject){        
-    questionObject = currentQuestion;                                   // TEST
-    questionText.textContent = questionObject.question;
+startButton.addEventListener("click", function(){        
+    currentQuestion = allObjects[currentQuestionIndex];                               
+    questionText.textContent = currentQuestion.question;
     lead.textContent = "";
     lead2.textContent = "";
     startButton.parentNode.removeChild(startButton);
-    correctButton(questionObject);     
-    wrongButtons(questionObject);
+    correctButton(currentQuestion);     
+    wrongButtons(currentQuestion);
     startTimer();
 });
 
@@ -139,20 +124,21 @@ function wrongButtons (questionObject) {
 
 
 // Change Button and Question Text Conent for a newQuestion. 
-function newQuestion (questionObject){
+function newQuestion (){
+                                       
     var newWrong1 = document.querySelector("#wrong1");
     var newWrong2 = document.querySelector("#wrong2");
     var newWrong3 = document.querySelector("#wrong3");
     var newAnswer = document.querySelector("#correct");
 
-    questionText.textContent = questionObject.question;
+    questionText.textContent = currentQuestion.question;  
     lead.textContent = "";
     lead2.textContent = "";
 
-    newWrong1.innerHTML = questionObject.wrong[0];
-    newAnswer.innerHTML = questionObject.correct;
-    newWrong2.innerHTML = questionObject.wrong[1];
-    newWrong3.innerHTML = questionObject.wrong[2];
+    newWrong1.innerHTML = currentQuestion.wrong[0];
+    newAnswer.innerHTML = currentQuestion.correct;
+    newWrong2.innerHTML = currentQuestion.wrong[1];
+    newWrong3.innerHTML = currentQuestion.wrong[2];
 
     newWrong1.setAttribute("class", "btn btn-info btn-lg m-2");
     newWrong2.setAttribute("class", "btn btn-info btn-lg m-2");
@@ -160,24 +146,24 @@ function newQuestion (questionObject){
 
 };
 
-// This function controls what happens when user clicks correct or wrong buttons.    
+// This function controls the flow of the quiz and checks user input.      
 var quizProgress = function (event) {
-    var element = event.target;
+    var element = event.target;                                                                 
     para.style.display = "none";
     para2.style.display = "none";
     if (element.matches("button") === true && element.id === "correct") {
         para.style.display = "block";
-        setTimeout(() => {newQuestion(headingTypes); }, 1000);                                          //**TEST
+        setTimeout(() => {newQuestion(currentQuestion); }, 1000);                                        
         score = score + 10;
-        console.log(score);
-     
+        getQuestion();
     } 
     else if (element.matches("button") === true && element.id === "wrong1" || element.id === "wrong2" || element.id === "wrong3") {
         timer = timer - 10;
         renderTime();
         element.setAttribute("class", "btn btn-danger btn-lg m-2");
         para2.style.display = "block";
-        setTimeout(() => {  newQuestion(headingTypes);  }, 1000);                                         //**TEST
+        setTimeout(() => {  newQuestion(currentQuestion);  }, 1000);                                 
+        getQuestion();
     }
 };
 answers.addEventListener("click", quizProgress);
@@ -241,12 +227,16 @@ function gameOver(){
     clearButton.setAttribute("class", "btn btn-info btn-lg m-2");
     scoreDiv.appendChild(clearButton);
 
-    //TODO: A button to restart the quiz window.location.reload(); 
+    // Reloads the page to restart the game
+    var restartBtn = document.createElement("button");
+    restartBtn.innerHTML = "Restart";
+    restartBtn.setAttribute("class", "btn btn-info btn-lg m-2");
+    scoreDiv.appendChild(restartBtn);
 
-// Score
-
+// Score Functions
 submitScore.addEventListener("click", saveMyScore);
     
+    // Saves score and username to local storage
 function saveMyScore (){
 
     var user = highScore.value.trim();
@@ -272,11 +262,15 @@ function saveMyScore (){
       });
     };
 
+    // Clears high scores from local storage and reloads the quiz. 
 function clear() {
         window.localStorage.removeItem("highscores");
         window.location.reload();
       };
     
 clearButton.addEventListener("click", clear);
+restartBtn.addEventListener("click", function(){
+    location.reload();
+})
  
 }; 
